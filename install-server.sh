@@ -12,13 +12,34 @@ if [ ! -f config/ai-models.env ]; then
 fi
 
 if ! command -v docker >/dev/null 2>&1; then
-  echo "未检测到 Docker，请先安装 Docker Engine 与 Compose 插件。"
+  echo "未检测到 Docker，请先安装 Docker Desktop（macOS/Windows）或 Docker Engine（Linux）。"
   exit 1
 fi
 
 if ! docker compose version >/dev/null 2>&1; then
   echo "未检测到 docker compose，请先安装 Compose 插件。"
   exit 1
+fi
+
+if ! docker info >/dev/null 2>&1; then
+  if [ "$(uname -s)" = "Darwin" ] && [ -d "/Applications/Docker.app" ]; then
+    echo "正在启动 Docker Desktop..."
+    open -a Docker
+    ready=0
+    i=0
+    while [ "$i" -lt 60 ]; do
+      if docker info >/dev/null 2>&1; then ready=1; break; fi
+      i=$((i + 1))
+      sleep 2
+    done
+    if [ "$ready" -ne 1 ]; then
+      echo "Docker Desktop 启动超时，请先手动打开 Docker Desktop 后重试。"
+      exit 1
+    fi
+  else
+    echo "Docker 服务未运行，请先启动 Docker Desktop 或 Docker Engine。"
+    exit 1
+  fi
 fi
 
 if [ ! -f .env ]; then

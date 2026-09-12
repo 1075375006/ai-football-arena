@@ -18,6 +18,26 @@ if ($LASTEXITCODE -ne 0) {
   throw "未检测到 docker compose。"
 }
 
+docker info | Out-Null
+if ($LASTEXITCODE -ne 0) {
+  $dockerDesktop = Join-Path ${env:ProgramFiles} "Docker\Docker\Docker Desktop.exe"
+  if (Test-Path $dockerDesktop) {
+    Write-Host "正在启动 Docker Desktop..."
+    Start-Process $dockerDesktop
+    $ready = $false
+    1..60 | ForEach-Object {
+      if (-not $ready) {
+        Start-Sleep -Seconds 2
+        docker info | Out-Null
+        if ($LASTEXITCODE -eq 0) { $ready = $true }
+      }
+    }
+    if (-not $ready) { throw "Docker Desktop 启动超时，请手动打开后重试。" }
+  } else {
+    throw "Docker 服务未运行，请先启动 Docker Desktop。"
+  }
+}
+
 if (-not (Test-Path ".env")) {
   $password = [Guid]::NewGuid().ToString("N") + [Guid]::NewGuid().ToString("N").Substring(0, 16)
   $adminToken = [Guid]::NewGuid().ToString("N") + [Guid]::NewGuid().ToString("N").Substring(0, 16)

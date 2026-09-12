@@ -12,21 +12,25 @@
 - `public/`：当前赛季、历史赛季、响应式样式与浏览器交互。
 - `Dockerfile`：Node 22 Alpine 生产镜像。
 - `docker-compose.yml`：网页服务、PostgreSQL 16 和持久化 volume。
-- `install-server.sh`、`install.ps1`、`install.bat`：Linux / Windows 一键部署。
+- `install.sh`、`install.command`、`install-server.sh`、`install.ps1`、`install.bat`：macOS / Linux / Windows 一键部署入口。
 
 ## 一键部署
 
-Linux：
+macOS / Linux 终端（统一命令）：
 
 ```bash
-./install-server.sh
+./install.sh
 ```
+
+macOS Finder：双击 `install.command`。首次下载后若系统阻止执行，可在终端运行：`chmod +x install.sh install.command install-server.sh`。
 
 Windows 可双击 `install.bat`，或在 PowerShell 执行：
 
 ```powershell
 .\install.ps1
 ```
+
+三种入口最终执行同一套 Docker Compose 部署流程；macOS 检测到 Docker Desktop 未启动时会自动尝试打开并等待就绪。
 
 安装脚本会在首次运行时创建私有 `.env`，生成数据库密码和结算令牌，然后访问 [http://localhost:3000](http://localhost:3000)。
 

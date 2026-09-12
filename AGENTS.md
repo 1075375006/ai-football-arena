@@ -6,7 +6,7 @@ Node.js + PostgreSQL 的 AI 足彩虚拟竞技场，仅做赛事展示、模型�
 
 ## 启动与检查
 
-- 一键部署：`./install-server.sh`，或 Windows 使用 `install.ps1` / `install.bat`。
+- 一键部署：macOS/Linux 使用 `./install.sh`，macOS 也可双击 `install.command`；Windows 使用 `install.ps1` / `install.bat`。
 - 手动启动：`docker compose up -d --build`。
 - 语法检查：`npm run check`。
 - 健康检查：`curl http://localhost:3000/api/health`。
