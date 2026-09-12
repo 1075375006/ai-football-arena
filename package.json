@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "check": "node --check server.js && node --check modules/sporttery-results.js && node --check modules/demo-decisions.js && node --check public/app.js && node --check public/history.js"
+    "check": "node --check server.js && node --check modules/ai-participants.js && node --check modules/demo-decisions.js && node --check modules/sporttery-matches.js && node --check modules/sporttery-results.js && node --check config/ai-models.js && node --check public/app.js && node --check public/history.js"
   },
   "engines": {
     "node": ">=22"
