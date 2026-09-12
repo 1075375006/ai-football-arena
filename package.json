@@ -1,0 +1,20 @@
+{
+  "name": "ai-football-arena",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI 足彩竞技场：Node.js、PostgreSQL 与极简前端演示",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check modules/sporttery-results.js && node --check modules/demo-decisions.js && node --check public/app.js && node --check public/history.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}
